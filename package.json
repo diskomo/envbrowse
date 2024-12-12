@@ -1,0 +1,81 @@
+{
+  "name": "envbrowse",
+  "displayName": "envbrowse",
+  "description": "Easily copy keys/values from .env files to your clipboard",
+  "repository": "https://github.com/diskomo/envbrowse",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:dotenv"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.openEnvFile",
+        "title": "Open .env Viewer"
+      }
+    ],
+    "languages": [
+      {
+        "id": "dotenv",
+        "extensions": [
+          ".env",
+          ".env.local",
+          ".env.development",
+          ".env.development.local",
+          ".env.test",
+          ".env.test.local",
+          ".env.production",
+          ".env.production.local"
+        ],
+        "aliases": [
+          "Environment",
+          "env"
+        ]
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceFilename == '.env' || resourceFilename == '.env.local' || resourceFilename == '.env.development' || resourceFilename == '.env.development.local' || resourceFilename == '.env.test' || resourceFilename == '.env.test.local' || resourceFilename == '.env.production' || resourceFilename == '.env.production.local'",
+          "command": "extension.openEnvFile",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "1.93",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.16.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "npm@8.9.2+sha1.5f2fa48d614263457cf5d7fb7be8b878da318d87"
+}
